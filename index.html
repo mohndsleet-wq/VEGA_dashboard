@@ -1,71 +1,1131 @@
-/* Compact desktop layout */
-.container {
-  width: min(1240px, 90%);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101112">
+<title>VEGA | Engineering Workspace</title>
+
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#101112;
+  --panel:#181a1d;
+  --line:#303338;
+  --text:#f0f1f3;
+  --muted:#a1a6ae;
+  --red:#dc2034;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font:14px/1.6 Arial,Helvetica,sans-serif;
+}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;color:inherit}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible,input:focus-visible,
+select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--red);
+  outline-offset:4px;
+}
+.wrap{width:min(1240px,90%);margin:auto}
+.utility{
+  background:#16181b;
+  border-bottom:1px solid var(--red);
+  color:#b9bdc4;
+  font-size:11px;
+}
+.utility .wrap{
+  display:flex;
+  justify-content:space-between;
+  padding:7px 0;
+}
+.masthead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:108px;
+  gap:25px;
+}
+.brand{display:inline-flex;flex-direction:column;line-height:1}
+.brand strong{
+  font-size:61px;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-4px;
+  color:#e4e5e8;
+}
+.brand small{
+  margin-top:8px;
+  font-size:9px;
+  letter-spacing:3.3px;
+}
+.header-info{display:flex;gap:28px}
+.header-info>div{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-left:24px;
+  border-left:1px solid #45494f;
+  font-size:10px;
+  letter-spacing:1.1px;
+}
+.header-info svg{width:29px;height:29px;color:var(--red)}
+svg{display:block}
+.navbar{
+  position:relative;
+  z-index:30;
+  background:#141619;
+  border-block:1px solid var(--line);
+}
+.nav-inner{display:flex;align-items:stretch}
+.nav-links{display:flex;flex:1}
+.nav-group{position:relative;flex:1}
+.nav-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  min-height:50px;
+  padding:12px 10px;
+  border:0;
+  border-bottom:2px solid transparent;
+  background:transparent;
+  white-space:nowrap;
+  font-size:10px;
+}
+.nav-link:hover,.nav-link.active,.nav-group.open>.nav-link{
+  background:#22252a;
+  border-bottom-color:var(--red);
+}
+.arrow{color:var(--red);font-size:14px}
+.dropdown{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  min-width:240px;
+  background:#1a1d21;
+  border:1px solid #454a52;
+  box-shadow:0 18px 35px #0008;
+}
+.nav-group.open .dropdown{display:block}
+.dropdown a{
+  display:flex;
+  justify-content:space-between;
+  gap:18px;
+  padding:10px 17px;
+  border-bottom:1px solid #30343b;
+  font-size:12px;
+}
+.dropdown a:last-child{border-bottom:0}
+.dropdown a:after{content:"›";color:var(--red)}
+.dropdown a:hover{background:#292d33}
+.nav-search,.mobile-toggle{
+  border:0;
+  background:transparent;
+  padding:12px 14px;
+}
+.nav-search svg{width:20px;height:20px}
+.mobile-toggle{display:none}
+.hero{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  border-bottom:1px solid var(--line);
+}
+.hero-inner{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  min-height:355px;
+  gap:25px;
+  padding-block:40px 30px;
+}
+.watermark{
+  position:absolute;
+  z-index:-1;
+  left:0;
+  top:-8px;
+  font-size:clamp(150px,25vw,350px);
+  line-height:1.15;
+  font-weight:900;
+  font-style:italic;
+  letter-spacing:-.07em;
+  color:#ffffff0a;
+  pointer-events:none;
+}
+.eyebrow{
+  color:#c8ccd2;
+  font-size:10px;
+  letter-spacing:2.4px;
+}
+.eyebrow:after{
+  content:"";
+  display:block;
+  width:66px;
+  height:2px;
+  margin:15px 0 20px;
+  background:var(--red);
+}
+.hero h1{
+  margin:0 0 18px;
+  font-size:clamp(30px,3.1vw,43px);
+  font-weight:500;
+  line-height:1.17;
+  letter-spacing:-1.1px;
+}
+.hero p{
+  max-width:450px;
+  margin:0 0 25px;
+  color:var(--muted);
+  font-size:14px;
+}
+.primary{
+  display:inline-flex;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+  padding:11px 16px;
+  border:1px solid var(--red);
+  border-radius:3px;
+  background:var(--red);
+  color:#fff;
+  font-size:12px;
+}
+.primary:hover{background:#b91628}
+.hero-art{position:relative;min-width:0}
+.hero-art img{
+  display:none;
+  width:100%;
+  max-height:275px;
+  object-fit:contain;
+  filter:grayscale(1);
+  mix-blend-mode:lighten;
+}
+.hero-art.loaded img{display:block}
+.hero-art.loaded .fallback-art{display:none}
+.fallback-art{width:100%;height:auto;color:#9ca3ad}
+.hub{padding-block:24px 28px}
+.section-heading{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin:0 0 21px;
+  font-size:17px;
+  font-weight:500;
+}
+.section-heading:after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:var(--line);
+}
+.shortcuts{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  margin-bottom:26px;
+}
+.shortcut{
+  display:flex;
+  gap:13px;
+  align-items:flex-start;
+  padding:8px 16px;
+  border-right:1px solid #42474f;
+}
+.shortcut:first-child{padding-left:0}
+.shortcut:last-child{border-right:0}
+.shortcut:hover{background:#ffffff04}
+.shortcut svg{
+  width:29px;
+  height:32px;
+  flex-shrink:0;
+  color:var(--red);
+}
+.shortcut h3{
+  font-size:10px;
+  margin:0 0 7px;
+  font-weight:600;
+  text-transform:uppercase;
+}
+.shortcut p{
+  margin:0;
+  color:var(--muted);
+  font-size:11px;
+}
+.search-form{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:8px;
+  border:1px solid #454b54;
+  border-radius:3px;
+}
+.search-form label{padding:0 10px;white-space:nowrap;font-size:12px}
+input,select,textarea{
+  background:#131518;
+  color:var(--text);
+  border:1px solid #3b414a;
+  border-radius:3px;
+  padding:10px 12px;
+  min-width:0;
+}
+.search-form select{max-width:220px}
+.search-form input{flex:1;border:0}
+.search-form button{padding:9px 17px}
+.page{min-height:60vh;padding-block:32px 55px}
+.crumb{color:var(--muted);font-size:11px;margin-bottom:25px}
+.crumb a{color:white}
+.page-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  padding-bottom:23px;
+  border-bottom:1px solid var(--line);
+}
+.page h1{font-size:30px;font-weight:500;line-height:1.2;margin:0 0 8px}
+.page-head p{margin:0;color:var(--muted);font-size:13px}
+.filters{display:flex;gap:12px;margin:23px 0}
+.filters input{flex:1}
+.records{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.record{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:4px;
+  padding:22px;
+  overflow-wrap:anywhere;
+}
+.tag{
+  display:inline-block;
+  padding:3px 9px;
+  border:1px solid #dc203440;
+  background:#dc203410;
+  color:#f08a96;
+  font-size:10px;
+}
+.record h2{font-size:17px;font-weight:500;margin:15px 0 8px}
+.record p{font-size:12px;color:var(--muted);white-space:pre-wrap}
+.record a{display:inline-block;border-bottom:1px solid var(--red);font-size:12px}
+.empty{
+  grid-column:1/-1;
+  padding:48px 20px;
+  text-align:center;
+  border:1px dashed #414751;
+  color:var(--muted);
+}
+.empty strong{display:block;font-size:19px;color:white;margin-bottom:7px}
+.note{
+  margin-top:25px;
+  padding:11px 15px;
+  background:#ffffff03;
+  border-left:2px solid var(--red);
+  color:var(--muted);
+  font-size:11px;
+}
+.backup-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.secondary{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 13px;
+  background:transparent;
+  color:var(--text);
+  border:1px solid #424953;
+  border-radius:3px;
+  cursor:pointer;
+  font-size:11px;
+}
+.secondary:hover{background:#272c32}
+.result{display:block;padding:17px 0;border-bottom:1px solid var(--line)}
+.result small{display:block;color:var(--muted)}
+dialog{
+  width:min(500px,92vw);
+  background:#1a1d22;
+  color:var(--text);
+  border:1px solid #4a515c;
+  border-radius:5px;
+  padding:25px;
+}
+dialog::backdrop{background:#000b}
+dialog h2{font-size:22px;font-weight:500;margin-top:0}
+.fields{display:grid;gap:13px}
+.fields label{font-size:12px}
+.fields input,.fields select,.fields textarea{display:block;width:100%;margin-top:5px}
+.fields textarea{min-height:80px;resize:vertical}
+.dialog-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:20px}
+.error{color:#ff8998;font-size:12px}
+footer{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding-block:19px;
+  border-top:1px solid var(--line);
+  color:#8e959f;
+  font-size:9px;
+  letter-spacing:1.5px;
+}
+@media(hover:hover) and (min-width:761px){
+  .nav-group:hover .dropdown{display:block}
+}
+@media(max-width:1050px){
+  .header-info{gap:15px}
+  .header-info>div{font-size:9px;padding-left:15px}
+  .nav-link{font-size:9px;padding-inline:6px}
+  .shortcuts{grid-template-columns:repeat(3,1fr);gap:20px}
+  .shortcut{padding:8px 0;border:0}
+  .records{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:760px){
+  .utility .wrap>span:last-child{display:none}
+  .masthead{min-height:95px}
+  .brand strong{font-size:52px}
+  .brand small{font-size:8px;letter-spacing:2.7px}
+  .header-info{display:none}
+  .nav-inner{flex-wrap:wrap;justify-content:space-between}
+  .mobile-toggle{display:block;padding-left:0}
+  .nav-links{display:none;order:3;flex-basis:100%;flex-direction:column}
+  .navbar.expanded .nav-links{display:flex}
+  .nav-link{justify-content:space-between;font-size:11px;min-height:45px}
+  .dropdown{position:static;box-shadow:none;min-width:0}
+  .hero-inner{grid-template-columns:1fr;min-height:auto;padding-block:32px 25px}
+  .hero h1{font-size:33px}
+  .watermark{top:60px;font-size:44vw}
+  .hero-art{max-width:450px;width:100%;margin:auto}
+  .shortcuts{grid-template-columns:1fr 1fr;gap:18px}
+  .shortcut{gap:10px}
+  .shortcut h3{font-size:9px}
+  .search-form{flex-wrap:wrap}
+  .search-form label{display:none}
+  .search-form select{width:100%;max-width:none}
+  .search-form input{width:65%}
+  .page-head{flex-direction:column;align-items:flex-start}
+  .filters{flex-direction:column}
+  .records{grid-template-columns:1fr}
+  footer{font-size:8px;letter-spacing:.8px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Shared icons -->
+<svg xmlns="http://www.w3.org/2000/svg"
+     style="position:absolute;width:0;height:0;overflow:hidden"
+     aria-hidden="true">
+<defs>
+  <symbol id="i-fuel" viewBox="0 0 32 32">
+    <rect x="3" y="8" width="26" height="16" rx="7"/>
+    <path d="M9 8v16M23 8v16M10 24v4M22 24v4M14 8V4h5v4"/>
+  </symbol>
+  <symbol id="i-generator" viewBox="0 0 32 32">
+    <rect x="3" y="8" width="26" height="18" rx="1"/>
+    <path d="M7 12h6v8H7zM17 12h8M17 16h8M17 20h8M8 26v3M24 26v3M12 8V4h9v4"/>
+  </symbol>
+  <symbol id="i-cad" viewBox="0 0 32 32">
+    <path d="M7 3h13l6 6v20H7zM20 3v7h6M11 15h11M11 20h11M11 25h7"/>
+  </symbol>
+  <symbol id="i-projects" viewBox="0 0 32 32">
+    <path d="M3 9h10l3 4h13v15H3zM3 9V5h10l3 3h10v5"/>
+  </symbol>
+  <symbol id="i-po" viewBox="0 0 32 32">
+    <path d="M7 3h13l6 6v20H7zM20 3v7h6M11 15h11M11 20h11M11 25h8"/>
+  </symbol>
+  <symbol id="i-search" viewBox="0 0 32 32">
+    <circle cx="14" cy="14" r="9"/>
+    <path d="m21 21 8 8"/>
+  </symbol>
+</defs>
+</svg>
+
+<div class="utility">
+  <div class="wrap">
+    <span>VEGA Engineering Solutions</span>
+    <span>Engineering Workspace</span>
+  </div>
+</div>
+
+<header class="masthead wrap">
+  <a class="brand" href="#home" aria-label="VEGA home">
+    <strong>VEGA</strong>
+    <small>ENGINEERING SOLUTIONS</small>
+  </a>
+
+  <div class="header-info">
+    <div>
+      <svg fill="none" stroke="currentColor" stroke-width="1.4">
+        <use href="#i-generator"/>
+      </svg>
+      <span>POWER & ENERGY<br>SOLUTIONS</span>
+    </div>
+    <div>
+      <svg fill="none" stroke="currentColor" stroke-width="1.4">
+        <use href="#i-cad"/>
+      </svg>
+      <span>ENGINEERING<br>WORKSPACE</span>
+    </div>
+  </div>
+</header>
+
+<nav class="navbar" aria-label="Main navigation">
+  <div class="nav-inner wrap">
+    <button class="mobile-toggle" id="mobileToggle" aria-expanded="false">
+      ☰ MENU
+    </button>
+    <div class="nav-links" id="navigation"></div>
+    <button class="nav-search" id="searchButton" aria-label="Search">
+      <svg fill="none" stroke="currentColor" stroke-width="1.6">
+        <use href="#i-search"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<main id="main"></main>
+
+<footer class="wrap">
+  <span>VEGA ENGINEERING SOLUTIONS</span>
+  <span>ENGINEERING WORKSPACE</span>
+</footer>
+
+<dialog id="recordDialog">
+  <form id="recordForm">
+    <h2 id="dialogTitle">Add record</h2>
+    <div class="fields">
+      <label>Title *
+        <input name="title" required maxlength="180">
+      </label>
+      <label>Model / Project / PO reference
+        <input name="reference" maxlength="180">
+      </label>
+      <label>Category
+        <select name="category" id="recordCategory"></select>
+      </label>
+      <label>Document link
+        <input name="link" placeholder="https://… or files/document.pdf">
+      </label>
+      <label>Notes
+        <textarea name="notes" maxlength="4000"></textarea>
+      </label>
+    </div>
+    <p class="error" id="formError" role="alert"></p>
+    <div class="dialog-actions">
+      <button type="button" class="secondary" id="cancelRecord">Cancel</button>
+      <button type="submit" class="primary">Save record</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+"use strict";
+
+/* Change this URL if the fuel website moves. */
+const FUEL_URL =
+  "https://vega-engineering-solutions.github.io/VEGA-VEGA/";
+
+const departments = [
+  {
+    id:"fuel",
+    name:"Fuel System",
+    icon:"fuel",
+    external:FUEL_URL,
+    description:"Open the VEGA Fuel System website.",
+    categories:[]
+  },
+  {
+    id:"datasheets",
+    name:"Generator Datasheets",
+    icon:"generator",
+    description:"Generator, engine, alternator and controller datasheets.",
+    categories:[
+      "All datasheets","Cummins","Perkins","John Deere","Kubota",
+      "Volvo Penta","Engines","Alternators","Controllers"
+    ]
+  },
+  {
+    id:"autocad",
+    name:"AutoCAD Files",
+    icon:"cad",
+    description:"Layouts, general arrangements and technical drawings.",
+    categories:[
+      "All drawings","Generator GA","Room Layouts",
+      "Fuel System","Tank Drawings","ATS Panels"
+    ]
+  },
+  {
+    id:"projects",
+    name:"Projects",
+    icon:"projects",
+    description:"Project references and related documentation.",
+    categories:["All projects","Active","Pending Approval","Completed"]
+  },
+  {
+    id:"po",
+    name:"Purchase Orders",
+    icon:"po",
+    description:"Purchase orders, suppliers and delivery records.",
+    categories:[
+      "All orders","Draft","Issued","In Production","Ready","Delivered"
+    ]
+  }
+];
+
+/*
+Add documents here to make them available to all visitors.
+
+Example:
+{
+  id:"document-1",
+  department:"datasheets",
+  title:"Generator datasheet",
+  reference:"YOUR MODEL",
+  category:"Cummins",
+  notes:"Technical document",
+  link:"files/datasheet.pdf"
+}
+*/
+const sharedRecords = [];
+
+const STORAGE_KEY = "vega.workspace.records.v1";
+const main = document.getElementById("main");
+const dialog = document.getElementById("recordDialog");
+const form = document.getElementById("recordForm");
+
+let records = loadRecords();
+let currentDepartment = null;
+let refreshRecords = null;
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#39;"
+  }[character]));
 }
 
-.masthead {
-  min-height: 100px;
+function icon(name){
+  return `<svg viewBox="0 0 32 32" fill="none"
+    stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    <use href="#i-${name}"></use></svg>`;
 }
 
-.logo strong {
-  font-size: 58px;
+function makeID(){
+  return globalThis.crypto?.randomUUID
+    ? crypto.randomUUID()
+    : Date.now().toString(36) + Math.random().toString(36).slice(2);
 }
 
-.logo small {
-  font-size: 9px;
-  letter-spacing: 3px;
+function validRecord(record){
+  return record && typeof record === "object" &&
+    typeof record.title === "string" &&
+    record.title.trim().length > 0 &&
+    departments.some(d => !d.external && d.id === record.department);
 }
 
-.nav-button {
-  min-height: 49px;
-  padding: 12px 10px;
+function normalizeRecord(record){
+  return {
+    id:String(record.id || makeID()),
+    department:record.department,
+    title:String(record.title).slice(0,180),
+    reference:String(record.reference || "").slice(0,180),
+    category:String(record.category || ""),
+    notes:String(record.notes || "").slice(0,4000),
+    link:String(record.link || "")
+  };
 }
 
-.hero-inner {
-  min-height: 350px;
-  padding-block: 38px 30px;
-  gap: 24px;
+function loadRecords(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(data)
+      ? data.filter(validRecord).map(normalizeRecord)
+      : [];
+  }catch{
+    return [];
+  }
 }
 
-.hero h1 {
-  font-size: clamp(30px, 3vw, 43px);
-  line-height: 1.18;
+function saveRecords(next){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  records = next;
 }
 
-.hero p {
-  font-size: 14px;
-  margin-bottom: 24px;
+function allRecords(){
+  return [...sharedRecords.filter(validRecord), ...records];
 }
 
-.watermark {
-  top: 0;
-  font-size: clamp(150px, 24vw, 340px);
+function safeURL(value){
+  if(!value || !String(value).trim()) return null;
+  try{
+    const parsed = new URL(String(value).trim(), location.href);
+    return ["http:","https:","file:"].includes(parsed.protocol)
+      ? parsed.href : null;
+  }catch{
+    return null;
+  }
 }
 
-.equipment {
-  max-height: 280px;
+function sectionURL(department, category=""){
+  if(department.external) return department.external;
+  return "#" + department.id +
+    (category ? "?category=" + encodeURIComponent(category) : "");
 }
 
-.hub {
-  padding-block: 20px 25px;
+function closeMenus(){
+  document.querySelectorAll(".nav-group.open").forEach(group => {
+    group.classList.remove("open");
+    group.querySelector("button")?.setAttribute("aria-expanded","false");
+  });
 }
 
-.section-title {
-  font-size: 17px;
-  margin-bottom: 18px;
+function renderNavigation(){
+  document.getElementById("navigation").innerHTML = `
+    <div class="nav-group">
+      <a class="nav-link" href="#home" data-home>HOME</a>
+    </div>
+    ${departments.map(d => d.external ? `
+      <div class="nav-group">
+        <a class="nav-link" href="${escapeHTML(d.external)}">
+          ${d.name.toUpperCase()}
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    ` : `
+      <div class="nav-group">
+        <button class="nav-link" data-menu="${d.id}"
+          aria-expanded="false" aria-controls="menu-${d.id}">
+          ${d.name.toUpperCase()}
+          <span class="arrow">⌄</span>
+        </button>
+        <div class="dropdown" id="menu-${d.id}">
+          ${d.categories.map((category,index) => `
+            <a href="${sectionURL(d,index ? category : "")}">
+              ${escapeHTML(category)}
+            </a>
+          `).join("")}
+        </div>
+      </div>
+    `).join("")}
+  `;
+
+  document.querySelectorAll("[data-menu]").forEach(button => {
+    button.addEventListener("click", () => {
+      const group = button.parentElement;
+      const open = !group.classList.contains("open");
+      closeMenus();
+      if(open){
+        group.classList.add("open");
+        button.setAttribute("aria-expanded","true");
+      }
+    });
+  });
 }
 
-@media (max-width: 760px) {
-  .hero-inner {
-    min-height: auto;
-    padding-block: 30px 22px;
+function renderHome(){
+  main.innerHTML = `
+    <section class="hero">
+      <div class="hero-inner wrap">
+        <div class="watermark" aria-hidden="true">VEGA</div>
+        <div>
+          <div class="eyebrow">VEGA ENGINEERING SOLUTIONS</div>
+          <h1>Powering your<br>engineering workspace.</h1>
+          <p>
+            Fuel systems, generator data, drawings and project records.
+          </p>
+          <a class="primary" href="#datasheets">
+            Explore technical resources <span>→</span>
+          </a>
+        </div>
+
+        <div class="hero-art" id="heroArt">
+          <img id="equipmentImage" src="assets/equipment.webp"
+            alt="Illustrative generator and fuel tank">
+
+          <!-- Fallback illustration when the image is not uploaded. -->
+          <svg class="fallback-art" viewBox="0 0 570 290"
+            fill="none" stroke="currentColor" stroke-width="1.4"
+            role="img" aria-label="Generator and fuel tank illustration">
+            <path d="M15 250h540" stroke="#454b54"/>
+            <g opacity=".65">
+              <rect x="35" y="100" width="270" height="135" rx="3"/>
+              <path d="M35 125h270M155 125v110M245 125v110"/>
+              <rect x="55" y="143" width="70" height="58" rx="2"/>
+              <rect x="67" y="153" width="45" height="19"/>
+              <path d="M67 184h17M95 184h17"/>
+              <path d="M174 145h48M174 156h48M174 167h48
+                M174 178h48M174 189h48M174 200h48M174 211h48"/>
+              <path d="M261 143h26M261 154h26M261 165h26
+                M261 176h26M261 187h26M261 198h26M261 209h26"/>
+              <rect x="25" y="235" width="290" height="15"/>
+              <path d="M85 100V86h33v14M218 100V75h12v25"/>
+            </g>
+            <g opacity=".52">
+              <rect x="340" y="119" width="195" height="103" rx="42"/>
+              <ellipse cx="383" cy="170" rx="22" ry="51"/>
+              <path d="M391 119h100M391 222h100
+                M384 222v28M492 222v28M374 250h22M482 250h22
+                M419 119V98h17v21M479 119V76h9v43"/>
+              <path d="M519 145h24v33h-24"/>
+            </g>
+            <path d="M35 265h110M340 265h110" stroke="#dc2034"/>
+            <text x="35" y="282" fill="#858d99" stroke="none"
+              font-size="9" letter-spacing="2">POWER GENERATION</text>
+            <text x="340" y="282" fill="#858d99" stroke="none"
+              font-size="9" letter-spacing="2">FUEL SYSTEMS</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="hub wrap">
+      <h2 class="section-heading">Access your workspace</h2>
+      <div class="shortcuts">
+        ${departments.map(d => `
+          <a class="shortcut" href="${sectionURL(d)}">
+            ${icon(d.icon)}
+            <div>
+              <h3>${d.name}</h3>
+              <p>${d.description}</p>
+            </div>
+          </a>
+        `).join("")}
+      </div>
+
+      <form class="search-form" id="globalSearch">
+        <label for="globalQuery">Quick search</label>
+        <select name="department" aria-label="Department">
+          <option value="">All departments</option>
+          ${departments.map(d => `
+            <option value="${d.id}">${d.name}</option>
+          `).join("")}
+        </select>
+        <input id="globalQuery" name="query" required
+          placeholder="Search by model, project number or document name">
+        <button class="primary" aria-label="Search">→</button>
+      </form>
+    </section>
+  `;
+
+  const image = document.getElementById("equipmentImage");
+  const art = document.getElementById("heroArt");
+
+  function showImage(){
+    if(image.naturalWidth) art.classList.add("loaded");
+  }
+  image.addEventListener("load",showImage);
+  if(image.complete) showImage();
+
+  document.getElementById("globalSearch").onsubmit = event => {
+    event.preventDefault();
+    const values = new FormData(event.target);
+    location.hash = "search?q=" +
+      encodeURIComponent(values.get("query")) +
+      "&department=" + encodeURIComponent(values.get("department"));
+  };
+}
+
+function recordCards(list){
+  if(!list.length){
+    return `<div class="empty">
+      <strong>No records yet</strong>
+      Add a record with its reference and document link.
+    </div>`;
   }
 
-  .hero h1 {
-    font-size: 32px;
+  return list.map(record => {
+    const link = safeURL(record.link);
+    return `<article class="record">
+      <span class="tag">${escapeHTML(record.category || "Record")}</span>
+      <h2>${escapeHTML(record.title)}</h2>
+      ${record.reference
+        ? `<p>${escapeHTML(record.reference)}</p>` : ""}
+      ${record.notes
+        ? `<p>${escapeHTML(record.notes)}</p>` : ""}
+      ${link ? `<a href="${escapeHTML(link)}" target="_blank"
+        rel="noopener noreferrer">Open document ↗</a>` : ""}
+    </article>`;
+  }).join("");
+}
+
+function renderDepartment(department,params){
+  const selected = params.get("category") || "";
+
+  main.innerHTML = `
+    <section class="page wrap">
+      <div class="crumb">
+        <a href="#home">Home</a> / ${department.name}
+      </div>
+      <div class="page-head">
+        <div>
+          <h1>${department.name}</h1>
+          <p>${department.description}</p>
+        </div>
+        <button class="primary" id="addRecord">+ Add record</button>
+      </div>
+
+      <div class="filters">
+        <input id="recordSearch" aria-label="Search records"
+          placeholder="Search ${department.name.toLowerCase()}…">
+        <select id="categoryFilter" aria-label="Category">
+          <option value="">${department.categories[0]}</option>
+          ${department.categories.slice(1).map(category => `
+            <option value="${escapeHTML(category)}"
+              ${category === selected ? "selected" : ""}>
+              ${escapeHTML(category)}
+            </option>
+          `).join("")}
+        </select>
+      </div>
+
+      <div class="records" id="recordList"></div>
+
+      <div class="note">
+        Added records are saved in this browser only.
+        Export a backup to keep a separate copy.
+      </div>
+
+      <div class="backup-actions">
+        <button class="secondary" id="exportBackup">Export backup ↓</button>
+        <label class="secondary">
+          Import backup ↑
+          <input type="file" id="importBackup"
+            accept=".json,application/json" hidden>
+        </label>
+      </div>
+      <p id="backupMessage" role="status"></p>
+    </section>
+  `;
+
+  const search = document.getElementById("recordSearch");
+  const category = document.getElementById("categoryFilter");
+
+  function update(){
+    const query = search.value.trim().toLowerCase();
+    const filtered = allRecords().filter(record =>
+      record.department === department.id &&
+      (!category.value || record.category === category.value) &&
+      [record.title,record.reference,record.category,record.notes]
+        .join(" ").toLowerCase().includes(query)
+    );
+    document.getElementById("recordList").innerHTML = recordCards(filtered);
   }
 
-  .watermark {
-    font-size: 43vw;
+  refreshRecords = update;
+  update();
+
+  search.oninput = update;
+  category.onchange = update;
+  document.getElementById("addRecord").onclick = () => {
+    currentDepartment = department;
+    form.reset();
+    document.getElementById("formError").textContent = "";
+    document.getElementById("dialogTitle").textContent =
+      "Add " + department.name + " record";
+    document.getElementById("recordCategory").innerHTML =
+      department.categories.slice(1).map(category => `
+        <option value="${escapeHTML(category)}">
+          ${escapeHTML(category)}
+        </option>
+      `).join("");
+    dialog.showModal();
+  };
+
+  document.getElementById("exportBackup").onclick = exportBackup;
+  document.getElementById("importBackup").onchange = importBackup;
+}
+
+form.onsubmit = event => {
+  event.preventDefault();
+  if(!currentDepartment) return;
+
+  const values = Object.fromEntries(new FormData(form));
+  values.title = values.title.trim();
+  values.link = values.link.trim();
+
+  if(!values.title){
+    document.getElementById("formError").textContent = "Enter a title.";
+    return;
+  }
+  if(values.link && !safeURL(values.link)){
+    document.getElementById("formError").textContent =
+      "Enter an HTTP/HTTPS link or relative file path.";
+    return;
+  }
+
+  const record = normalizeRecord({
+    ...values,
+    id:makeID(),
+    department:currentDepartment.id
+  });
+
+  try{
+    saveRecords([...records,record]);
+    dialog.close();
+    refreshRecords?.();
+  }catch{
+    document.getElementById("formError").textContent =
+      "Browser storage is full or unavailable.";
+  }
+};
+
+document.getElementById("cancelRecord").onclick = () => dialog.close();
+
+function exportBackup(){
+  const blob = new Blob(
+    [JSON.stringify(records,null,2)],
+    {type:"application/json"}
+  );
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = "VEGA-workspace-backup.json";
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+
+async function importBackup(event){
+  const file = event.target.files?.[0];
+  if(!file) return;
+
+  const message = document.getElementById("backupMessage");
+
+  try{
+    const imported = JSON.parse(await file.text());
+    if(!Array.isArray(imported) || !imported.every(validRecord)){
+      throw new Error("Invalid backup");
+    }
+
+    if(!confirm("Replace this browser’s records with this backup?")){
+      return;
+    }
+
+    saveRecords(imported.map(normalizeRecord));
+    refreshRecords?.();
+    message.textContent = "Backup imported successfully.";
+  }catch{
+    message.textContent =
+      "Could not import. Choose a valid VEGA backup JSON file.";
+  }finally{
+    event.target.value = "";
   }
 }
+
+function renderSearch(params){
+  const query = (params.get("q") || "").trim();
+  const departmentID = params.get("department") || "";
+  const lower = query.toLowerCase();
+
+  const matchedDepartments = departments.filter(d =>
+    (!departmentID || d.id === departmentID) &&
+    [d.name,...d.categories].join(" ").toLowerCase().includes(lower)
+  );
+
+  const matchedRecords = allRecords().filter(record =>
+    (!departmentID || record.department === departmentID) &&
+    [record.title,record.reference,record.category,record.notes]
+      .join(" ").toLowerCase().includes(lower)
+  );
+
+  main.innerHTML = `
+    <section class="page wrap">
+      <div class="crumb"><a href="#home">Home</a> / Search</div>
+      <h1>Search results</h1>
+      <p style="color:var(--muted)">
+        Results for “${escapeHTML(query)}”
+      </p>
+      ${matchedDepartments.map(d => `
+        <a class="result" href="${sectionURL(d)}">
+          ${d.name} →
+          <small>${d.description}</small>
+        </a>
+      `).join("")}
+      <div class="records" style="margin-top:22px">
+        ${recordCards(matchedRecords)}
+      </div>
+    </section>
+  `;
+}
+
+function route(){
+  if(dialog.open) dialog.close();
+  refreshRecords = null;
+  closeMenus();
+
+  document.querySelector(".navbar").classList.remove("expanded");
+  document.getElementById("mobileToggle")
+    .setAttribute("aria-expanded","false");
+
+  const hash = location.hash.slice(1) || "home";
+  const index = hash.indexOf("?");
+  const name = index < 0 ? hash : hash.slice(0,index);
+  const query = index < 0 ? "" : hash.slice(index+1);
+  const params = new URLSearchParams(query);
+
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.classList.toggle("active",
+      link.dataset.menu === name ||
+      (name === "home" && link.hasAttribute("data-home"))
+    );
+  });
+
+  if(name === "home"){
+    renderHome();
+  }else if(name === "search"){
+    renderSearch(params);
+  }else if(name === "fuel"){
+    location.assign(FUEL_URL);
+    return;
+  }else{
+    const department = departments.find(d => d.id === name);
+    if(department && !department.external){
+      renderDepartment(department,params);
+    }else{
+      main.innerHTML = `<section class="page wrap">
+        <h1>Page not found</h1>
+        <a class="primary" href="#home">Return home</a>
+      </section>`;
+    }
+  }
+
+  window.scrollTo(0,0);
+}
+
+function focusSearch(){
+  if(location.hash !== "#home") location.hash = "home";
+  setTimeout(() => document.getElementById("globalQuery")?.focus(),50);
+}
+
+document.getElementById("mobileToggle").onclick = event => {
+  const expanded = document.querySelector(".navbar")
+    .classList.toggle("expanded");
+  event.currentTarget.setAttribute("aria-expanded",String(expanded));
+};
+
+document.getElementById("searchButton").onclick = focusSearch;
+
+document.addEventListener("click",event => {
+  if(!event.target.closest(".nav-group")) closeMenus();
+});
+
+document.addEventListener("keydown",event => {
+  if((event.ctrlKey || event.metaKey) &&
+      event.key.toLowerCase() === "k"){
+    event.preventDefault();
+    focusSearch();
+  }
+  if(event.key === "Escape") closeMenus();
+});
+
+window.addEventListener("hashchange",route);
+
+renderNavigation();
+route();
+</script>
+</body>
+</html>
